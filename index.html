@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformers Universe</title>
+    <style>
+        /* ================================
+           VARIABLES Y CSS RESET
+        ================================= */
+        :root {
+            --bg-primary: #0b0e14;
+            --bg-card: #161b22;
+            --autobot-red: #ff2a2a;
+            --decepticon-purple: #9d4edd;
+            --cyber-blue: #00f0ff;
+            --text-light: #f0f6fc;
+            --text-muted: #8b949e;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-light);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ================================
+           HEADER & HERO SECTION
+        ================================= */
+        header {
+            background: linear-gradient(135deg, rgba(255, 42, 42, 0.2), rgba(157, 78, 221, 0.2)), var(--bg-primary);
+            border-bottom: 2px solid var(--cyber-blue);
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ================================
+           MAIN CONTAINER & LAYOUT
+        ================================= */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--cyber-blue);
+            margin: 10px auto 0;
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        /* Grid Responsivo con CSS Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* ================================
+           TARJETAS DE PERSONAJES
+        ================================= */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Estilos según facción */
+        .card.autobot:hover {
+            box-shadow: 0 0 20px rgba(255, 42, 42, 0.5);
+            border-color: var(--autobot-red);
+        }
+
+        .card.decepticon:hover {
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+            border-color: var(--decepticon-purple);
+        }
+
+        .card-img-wrapper {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .faction-badge {
+            align-self: flex-start;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .autobot .faction-badge {
+            background-color: rgba(255, 42, 42, 0.2);
+            color: var(--autobot-red);
+            border: 1px solid var(--autobot-red);
+        }
+
+        .decepticon .faction-badge {
+            background-color: rgba(157, 78, 221, 0.2);
+            color: var(--decepticon-purple);
+            border: 1px solid var(--decepticon-purple);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .card-alt {
+            font-size: 0.9rem;
+            color: var(--cyber-blue);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .autobot .card-btn {
+            background-color: transparent;
+            color: var(--autobot-red);
+            border: 1px solid var(--autobot-red);
+        }
+
+        .autobot .card-btn:hover {
+            background-color: var(--autobot-red);
+            color: #fff;
+        }
+
+        .decepticon .card-btn {
+            background-color: transparent;
+            color: var(--decepticon-purple);
+            border: 1px solid var(--decepticon-purple);
+        }
+
+        .decepticon .card-btn:hover {
+            background-color: var(--decepticon-purple);
+            color: #fff;
+        }
+
+        /* ================================
+           FOOTER
+        ================================= */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        footer span {
+            color: var(--cyber-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Hero Section -->
+    <header>
+        <h1>Transformers</h1>
+        <p>Más de lo que ves / More than meets the eye</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="section-title">Archivos de Cybertron</h2>
+
+        <div class="cards-grid">
+
+            <!-- Card 1: Optimus Prime -->
+            <article class="card autobot">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=600&q=80" alt="Optimus Prime Style">
+                </div>
+                <div class="card-content">
+                    <span class="faction-badge">Autobot</span>
+                    <h3 class="card-title">Optimus Prime</h3>
+                    <p class="card-alt">Modo Alt: Camión Peterbilt 379</p>
+                    <p class="card-desc">Líder legendario de los Autobots. Defensor incansable de la libertad, la justicia y la paz de todas las especies sintientes.</p>
+                    <a href="#" class="card-btn">Ver Expediente</a>
+                </div>
+            </article>
+
+            <!-- Card 2: Megatron -->
+            <article class="card decepticon">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Megatron Style">
+                </div>
+                <div class="card-content">
+                    <span class="faction-badge">Decepticon</span>
+                    <h3 class="card-title">Megatron</h3>
+                    <p class="card-alt">Modo Alt: Cañón de Fusión / Jet Cybertroniano</p>
+                    <p class="card-desc">Comandante supremo de los Decepticons. Busca conquistar el universo e imponer su control sobre Cybertron a cualquier costo.</p>
+                    <a href="#" class="card-btn">Ver Expediente</a>
+                </div>
+            </article>
+
+            <!-- Card 3: Bumblebee -->
+            <article class="card autobot">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Bumblebee Style">
+                </div>
+                <div class="card-content">
+                    <span class="faction-badge">Autobot</span>
+                    <h3 class="card-title">Bumblebee</h3>
+                    <p class="card-alt">Modo Alt: Chevrolet Camaro</p>
+                    <p class="card-desc">Explorador valiente y leal. A pesar de su tamaño, posee un corazón gigante y una valentía inigualable en el combate.</p>
+                    <a href="#" class="card-btn">Ver Expediente</a>
+                </div>
+            </article>
+
+            <!-- Card 4: Starscream -->
+            <article class="card decepticon">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=600&q=80" alt="Starscream Style">
+                </div>
+                <div class="card-content">
+                    <span class="faction-badge">Decepticon</span>
+                    <h3 class="card-title">Starscream</h3>
+                    <p class="card-alt">Modo Alt: Caza F-22 Raptor</p>
+                    <p class="card-desc">Segundo al mando de los Decepticons. Ambicioso, traicionero y siempre en busca de una oportunidad para arrebatarle el liderazgo a Megatron.</p>
+                    <a href="#" class="card-btn">Ver Expediente</a>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Base de Datos Cybertroniana. Diseñado con <span>HTML5 & CSS3</span>.</p>
+    </footer>
+
+</body>
+</html>
